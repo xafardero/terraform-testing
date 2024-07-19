@@ -1,40 +1,248 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<link rel="stylesheet" href="dist/reset.css">
-		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css">
+	<title>Unit testing our terraform modules</title>
 
-		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css">
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-			</div>
+	<link rel="stylesheet" href="dist/reset.css">
+	<link rel="stylesheet" href="dist/reveal.css">
+	<link rel="stylesheet" href="dist/theme/black.css">
+
+	<!-- Theme used for syntax highlighted code -->
+	<link rel="stylesheet" href="plugin/highlight/monokai.css">
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section>
+				<h1>Unit testing our terraform modules</h1>
+				<br>
+				<p>
+					made with <span style="color:red">♥</span> by <a rel="nofollow"
+						href="https://github.com/xafardero">xaf</a>
+				</p>
+			</section>
+			<section>
+				<h1>What's testing?</h1>
+				<aside class="notes">
+					<ul>
+						<li>
+							Software testing is a critical process in the software development lifecycle that involves
+							evaluating and verifying that a software application or system meets specified requirements
+							and functions correctly.
+						</li>
+						<li>
+							The primary goals of software testing are to identify defects, ensure quality, and confirm
+							that the software is reliable, secure, and performs as expected. Here’s a detailed overview
+							of what software testing entails:
+						</li>
+					</ul>
+				</aside>
+			</section>
+			<section>
+				<h2>Pyramid test</h2>
+				<img src="./img/pyramid.png" alt="reveal.js"
+					style="height: 450px; margin: 0 auto 4rem auto; background: transparent" class="demo-logo">
+				<aside class="notes">
+					<ul>
+						<li>Manual: pues eso a manija involves humans XD</li>
+						<li>End to end: These tests validate the entire application flow from start to finish.</li>
+						<li>Integration: These tests verify the interactions between different components or systems.
+						</li>
+						<li>Unitatios: These tests focus on individual components or functions in isolation</li>
+					</ul>
+				</aside>
+			</section>
+			<section>
+				<h2>In the past</h2>
+				<ul>
+					<li><a href="https://terratest.gruntwork.io/">terratest</a></li>
+					<li><a href="https://github.com/newcontext-oss/kitchen-terraform">kitchen-terraform</a></li>
+				</ul>
+				<aside class="notes">
+					<ul>
+						<li></li>
+					</ul>
+				</aside>
+			</section>
+			<section>
+				<h2>Now</h2>
+				<ul>
+					<li><a href="https://developer.hashicorp.com/terraform/language/tests">terraform</a></li>
+				</ul>
+				<aside class="notes">
+					<ul>
+						<li>Introduced in Terraform 1.6 with some limitations (in October 2023)</li>
+						<li>Mocking introduced in Terraform 1.7 (in January 2024)</li>
+					</ul>
+				</aside>
+			</section>
+			<section>
+				<h2>How we can Unit test our modules?</h2>
+				<a href="https://developer.hashicorp.com/terraform/tutorials/configuration-language/test">follow this
+					hashicorp turotial</a>
+				<aside class="notes">
+					<ul>
+						<li></li>
+					</ul>
+				</aside>
+			</section>
+			<section>
+				<h1>Thanks</h1>
+				<aside class="notes">
+					<ul>
+						<li>Just kidding</li>
+					</ul>
+				</aside>
+			</section>
+			<section>
+				<h2>Considerations</h2>
+				<ul>
+					<li>Test needs to be inside test folder (you can change it)</li>
+					<li>Tests have the *.tftest.hcl extension</li>
+					<li>Run new block syntax</li>
+				</ul>
+				<aside class="notes">
+					<ul>
+						<li></li>
+					</ul>
+				</aside>
+			</section>
+			<section>
+				<h1>Run</h1>
+				<ul>
+					<li>command</li>
+					<li>assert</li>
+					<li>expect_failures</li>
+					<li>variables, module, providers</li>
+				</ul>
+				<aside class="notes">
+					<ul>
+						<li>https://developer.hashicorp.com/terraform/language/tests#run-blocks</li>
+					</ul>
+				</aside>
+			</section>
+			<section>
+				<h2>Example</h2>
+				<pre>
+					<code data-trim data-noescape>					  
+						$ tree kraken/s3
+						.
+						├── README.md
+						├── main.tf
+						├── terraform.tf
+						├── tests
+						│   └── bucket_versioning.tftest.hcl
+						└── variables.tf		
+					  </code>
+					</pre>
+				<aside class="notes">
+					<ul>
+						<li></li>
+					</ul>
+				</aside>
+			</section>
+			<section>
+				<h2>Example</h2>
+				<pre>
+					<code data-trim data-noescape>					  
+					run "create_s3_versioning_bucket" {
+						variables {
+							versioning = "Disabled"
+						}
+					  
+						assert {
+						  condition     = local.versioning_status == var.versioning
+						  error_message = "Invalid versioning status."
+						}
+					}
+					  </code>
+					</pre>
+				<aside class="notes">
+					<ul>
+						<li></li>
+					</ul>
+				</aside>
+			</section>
+			<section>
+				<h2>Live example</h2>
+				<aside class="notes">
+					<ul>
+						<li>mkdir -p ~/Code/terraform-testing/tests</li>
+						<li>touch ~/Code/terraform-testing/main.tf</li>
+						<li>touch ~/Code/terraform-testing/terraform.tf</li>
+						<li>touch ~/Code/terraform-testing/variables.tf</li>
+						<li>touch ~/Code/terraform-testing/tests/assert_something.tftest.hcl</li>
+						<li>terraform init</li>
+						<li>terraform plan</li>
+						<li>terraform test</li>
+						<li>touch ~/Code/terraform-testing/main.tf (to fail)</li>
+						<li>terraform test</li>
+					</ul>
+				</aside>
+			</section>
+			<section>
+				<h2>How we're doing it?</h2>
+				<ul>
+					<li>Kraken, our terraform modules repository</li>
+				</ul>
+				<aside class="notes">
+					<ul>
+						<li></li>
+					</ul>
+				</aside>
+			</section>
+			<section>
+				<h1>How others are doing it</h1>
+				<ul>
+					<li><a href="https://github.com/aws-ia"> https://github.com/aws-ia</a> (some modules)</li>
+					<li><a href="https://github.com/search?q=path%3A*.tftest.hcl+language%3AHCL&type=code">github
+							search</a></li>
+				</ul>
+				<aside class="notes">
+					<ul>
+						<li></li>
+					</ul>
+				</aside>
+			</section>
+			<section>
+				<h1>Questions?</h1>
+				<aside class="notes">
+					<ul>
+						<li></li>
+					</ul>
+				</aside>
+			</section>
+			<section>
+				<h1>Thanks</h1>
+				<aside class="notes">
+					<ul>
+						<li></li>
+					</ul>
+				</aside>
+			</section>
 		</div>
+	</div>
 
-		<script src="dist/reveal.js"></script>
-		<script src="plugin/notes/notes.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
-		<script src="plugin/highlight/highlight.js"></script>
-		<script>
-			// More info about initialization & config:
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
-			Reveal.initialize({
-				hash: true,
+	<script src="dist/reveal.js"></script>
+	<script src="plugin/notes/notes.js"></script>
+	<script src="plugin/markdown/markdown.js"></script>
+	<script src="plugin/highlight/highlight.js"></script>
+	<script>
+		// More info about initialization & config:
+		// - https://revealjs.com/initialization/
+		// - https://revealjs.com/config/
+		Reveal.initialize({
+			hash: true,
 
-				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
-			});
-		</script>
-	</body>
+			// Learn about plugins: https://revealjs.com/plugins/
+			plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+		});
+	</script>
+</body>
+
 </html>
