@@ -10,6 +10,7 @@
 	<link rel="stylesheet" href="dist/reset.css">
 	<link rel="stylesheet" href="dist/reveal.css">
 	<link rel="stylesheet" href="dist/theme/black.css">
+	<link rel="stylesheet" href="plugin/pointer/pointer.css" />
 
 	<!-- Theme used for syntax highlighted code -->
 	<link rel="stylesheet" href="plugin/highlight/monokai.css">
@@ -28,6 +29,10 @@
 			</section>
 			<section>
 				<h1>What's testing?</h1>
+			</section>
+			<section>
+				<p>A procedure intended to establish the quality, performance, or reliability of something, especially
+					before it is taken into widespread use.</p>
 				<aside class="notes">
 					<ul>
 						<li>
@@ -58,10 +63,15 @@
 				</aside>
 			</section>
 			<section>
+				<h1>How we could test a terraform module?</h1>
+			</section>
+			<section>
 				<h2>In the past</h2>
 				<ul>
 					<li><a href="https://terratest.gruntwork.io/">terratest</a></li>
-					<li><a href="https://github.com/newcontext-oss/kitchen-terraform">kitchen-terraform</a></li>
+					<li><a href="https://github.com/newcontext-oss/kitchen-terraform">kitchen-terraform</a><a
+							href="https://newcontext-oss.github.io/kitchen-terraform/tutorials/amazon_provider_ec2.html">*</a>
+					</li>
 				</ul>
 				<aside class="notes">
 					<ul>
@@ -82,24 +92,6 @@
 				</aside>
 			</section>
 			<section>
-				<h2>How we can Unit test our modules?</h2>
-				<a href="https://developer.hashicorp.com/terraform/tutorials/configuration-language/test">follow this
-					hashicorp turotial</a>
-				<aside class="notes">
-					<ul>
-						<li></li>
-					</ul>
-				</aside>
-			</section>
-			<section>
-				<h1>Thanks</h1>
-				<aside class="notes">
-					<ul>
-						<li>Just kidding</li>
-					</ul>
-				</aside>
-			</section>
-			<section>
 				<h2>Considerations</h2>
 				<ul>
 					<li>Test needs to be inside test folder (you can change it)</li>
@@ -109,20 +101,6 @@
 				<aside class="notes">
 					<ul>
 						<li></li>
-					</ul>
-				</aside>
-			</section>
-			<section>
-				<h1>Run</h1>
-				<ul>
-					<li>command</li>
-					<li>assert</li>
-					<li>expect_failures</li>
-					<li>variables, module, providers</li>
-				</ul>
-				<aside class="notes">
-					<ul>
-						<li>https://developer.hashicorp.com/terraform/language/tests#run-blocks</li>
 					</ul>
 				</aside>
 			</section>
@@ -143,6 +121,20 @@
 				<aside class="notes">
 					<ul>
 						<li></li>
+					</ul>
+				</aside>
+			</section>
+			<section>
+				<h1>Run</h1>
+				<ul>
+					<li>command</li>
+					<li>assert</li>
+					<li>expect_failures</li>
+					<li>variables, module, providers</li>
+				</ul>
+				<aside class="notes">
+					<ul>
+						<li>https://developer.hashicorp.com/terraform/language/tests#run-blocks</li>
 					</ul>
 				</aside>
 			</section>
@@ -225,6 +217,20 @@
 					</ul>
 				</aside>
 			</section>
+			<section>
+				<h1>Links</h1>
+				<ul>
+					<li>https://www.hashicorp.com/blog/testing-hashicorp-terraform</li>
+					<li>https://developer.hashicorp.com/terraform/tutorials/configuration-language/test</li>
+					<li>https://developer.hashicorp.com/terraform/language/tests</li>
+					<li>https://developer.hashicorp.com/terraform/language/tests/mocking</li>
+				</ul>
+				<aside class="notes">
+					<ul>
+						<li></li>
+					</ul>
+				</aside>
+			</section>
 		</div>
 	</div>
 
@@ -232,6 +238,7 @@
 	<script src="plugin/notes/notes.js"></script>
 	<script src="plugin/markdown/markdown.js"></script>
 	<script src="plugin/highlight/highlight.js"></script>
+	<script src="plugin/pointer/pointer.js"></script>
 	<script>
 		// More info about initialization & config:
 		// - https://revealjs.com/initialization/
@@ -240,7 +247,7 @@
 			hash: true,
 
 			// Learn about plugins: https://revealjs.com/plugins/
-			plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+			plugins: [RevealMarkdown, RevealHighlight, RevealNotes, RevealPointer]
 		});
 	</script>
 </body>
