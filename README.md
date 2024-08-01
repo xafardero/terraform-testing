@@ -1,5 +1,7 @@
 # Show and Tell of terraform-testing
 
+See https://xafardero.github.io/terraform-testing/
+
 ## Setup
 
 Install dependencies
